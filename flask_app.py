@@ -6,8 +6,7 @@ import base64
 import numpy as np
 from PIL import Image
 from flask import Flask, jsonify, render_template, request
-from new import new1
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False

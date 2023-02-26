@@ -14,52 +14,13 @@ pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
-@app.route('/api')
-def hello_world():
-    #config = ('-l kor --oem 3 --psm 4')
-
-    config = ('-l kor+eng --oem 3 --psm 4')
-
-    #img_path = "./chupachups_test.jpg"
-    img_path = "./chupachups_test.jpg"
-
-    img_gray = cv2.imread(img_path, cv2.COLOR_BGR2GRAY)
-    img_gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    
-    # Resizing
-    width = 1000
-    aspect_ratio = float(width) / img_gray.shape[1]
-    dsize = (width, int(img_gray.shape[0] * aspect_ratio))
-    resized_gray = cv2.resize(img_gray, dsize, interpolation=cv2.INTER_AREA)
-
-    # grayscale -> binary
-    binary_gray = cv2.threshold(resized_gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
-    
-    gray_text = pytesseract.image_to_string(binary_gray, config=config)
-
-    return gray_text
-
 @app.route('/file_upload', methods=['GET', 'POST'])
 def file_upload():
     if request.method == 'POST':
-        ################################ image 가져오는 방법 ############################
-        # f = request.files['file']
-        # f.save(secure_filename(f.filename))
-        # print(f.filename)
-
-        # img_path = "./" + f.filename
-        # print(img_path)
-
-
-        # img_gray = cv2.imread(img_path, cv2.COLOR_BGR2GRAY)
-        # img_gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-        ################################################################################
         config = ('-l kor+eng --oem 3 --psm 4')
-
         d = dict(code='default', name='default', place='default', year='efault', month='default', day='default')
 
         base64image = request.json[0]['image']
-        print(base64image)
         imageStr = base64.b64decode(base64image)
         nparr = np.fromstring(imageStr, np.uint8)
 
@@ -199,7 +160,6 @@ def file_upload():
         result = json.dumps(d, indent=4, ensure_ascii=False)
         res = make_response(result)
         return res
-        #return jsonify(d)
     else:
         return render_template('file_upload.html')
 

@@ -37,7 +37,7 @@ def hello_world():
     return gray_text
 
 @app.route('/file_upload', methods=['GET', 'POST'])
-def file_upload():
+def file_upload():d
     if request.method == 'POST':
         ################################ image 가져오는 방법 ############################
         # f = request.files['file']
@@ -53,7 +53,7 @@ def file_upload():
         ################################################################################
         config = ('-l kor+eng --oem 3 --psm 4')
 
-        d = dict(code='default', name='default', place='default', year='default', month='default', day='default')
+        d = dict(code='default', name='default', place='default', year='efault', month='default', day='default')
 
         base64image = request.json[0]['image']
         imageStr = base64.b64decode(base64image)
@@ -75,7 +75,7 @@ def file_upload():
         oem = 2
         # psm = 0
         output = pytesseract.image_to_string(binary_gray, config=config)
-        # print(output)
+        print(output)
         # return output
         ############################################
         ############################################

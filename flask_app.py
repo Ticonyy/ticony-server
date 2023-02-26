@@ -62,9 +62,6 @@ def file_upload():
         nparr = np.fromstring(imageStr, np.uint8)
 
         img_gray = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-        # if img_gray:
-        #     print("image exists.")
-
 
         for code in pyzbar.decode(img_gray):
             barcodenum = code.data.decode('utf-8')
@@ -77,14 +74,8 @@ def file_upload():
 
         # grayscale -> binary
         binary_gray = cv2.threshold(resized_gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
-        oem = 2
-        # psm = 0
+
         output = pytesseract.image_to_string(binary_gray, config=config)
-        print("hi")
-        print(output)
-        # return output
-        ############################################
-        ############################################
 
         ############################################유효기간################################################
 
@@ -93,13 +84,11 @@ def file_upload():
             indexGigan = output.find("기간")
 
         candidates = output[indexGigan+2:]
-        # print(candidates)
 
         answer = ""
         for i in candidates:
             if i.isnumeric():
                 answer = answer + str(i)
-        # print(answer)
 
         year = answer[:4]
         month = answer[4:6]

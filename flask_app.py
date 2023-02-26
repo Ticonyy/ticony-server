@@ -44,7 +44,6 @@ def file_upload():
         # f.save(secure_filename(f.filename))
         # print(f.filename)
 
-        # config = ('-l kor+eng --oem 3 --psm 4')
         # img_path = "./" + f.filename
         # print(img_path)
 
@@ -52,6 +51,8 @@ def file_upload():
         # img_gray = cv2.imread(img_path, cv2.COLOR_BGR2GRAY)
         # img_gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         ################################################################################
+        config = ('-l kor+eng --oem 3 --psm 4')
+
         d = dict(code='default', name='default', place='default', year='default', month='default', day='default')
 
         base64image = request.json[0]['image']

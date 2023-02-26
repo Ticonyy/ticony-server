@@ -56,12 +56,13 @@ def file_upload():
         d = dict(code='default', name='default', place='default', year='efault', month='default', day='default')
 
         base64image = request.json[0]['image']
+        print(base64image)
         imageStr = base64.b64decode(base64image)
         nparr = np.fromstring(imageStr, np.uint8)
 
         img_gray = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-        if img_gray:
-            print("image exists.")
+        # if img_gray:
+        #     print("image exists.")
 
 
         for code in pyzbar.decode(img_gray):

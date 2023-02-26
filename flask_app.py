@@ -75,6 +75,7 @@ def file_upload():
         oem = 2
         # psm = 0
         output = pytesseract.image_to_string(binary_gray, config=config)
+        print("hi")
         print(output)
         # return output
         ############################################

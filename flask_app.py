@@ -60,6 +60,9 @@ def file_upload():
         nparr = np.fromstring(imageStr, np.uint8)
 
         img_gray = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
+        if img_gray:
+            print("image exists.")
+
 
         for code in pyzbar.decode(img_gray):
             barcodenum = code.data.decode('utf-8')

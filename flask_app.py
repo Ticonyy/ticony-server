@@ -199,7 +199,7 @@ def file_upload():
         ############################################
 
 
-        return d
+        return jsonify(d)
     else:
         return render_template('file_upload.html')
 

@@ -37,7 +37,7 @@ def hello_world():
     return gray_text
 
 @app.route('/file_upload', methods=['GET', 'POST'])
-def file_upload():d
+def file_upload():
     if request.method == 'POST':
         ################################ image 가져오는 방법 ############################
         # f = request.files['file']

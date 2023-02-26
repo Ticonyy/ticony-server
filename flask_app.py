@@ -15,6 +15,7 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/api')
 def hello_world():
     #config = ('-l kor --oem 3 --psm 4')
+    
     config = ('-l kor+eng --oem 3 --psm 4')
 
     #img_path = "./chupachups_test.jpg"

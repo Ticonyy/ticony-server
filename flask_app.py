@@ -3,9 +3,10 @@ import cv2
 import pyzbar.pyzbar as pyzbar
 import re
 import base64
+import json
 import numpy as np
 from PIL import Image
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, make_response
 # from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -204,8 +205,10 @@ def file_upload():
         ############################################
         ############################################
 
-
-        return jsonify(d)
+        result = json.dumps(d, indent=4, ensure_ascii=False)
+        res = make_response(result)
+        return res
+        #return jsonify(d)
     else:
         return render_template('file_upload.html')
 

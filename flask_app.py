@@ -15,7 +15,7 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/api')
 def hello_world():
     #config = ('-l kor --oem 3 --psm 4')
-    
+
     config = ('-l kor+eng --oem 3 --psm 4')
 
     #img_path = "./chupachups_test.jpg"
@@ -49,12 +49,12 @@ def file_upload():
         # img_path = "./" + f.filename
         # print(img_path)
 
-        # d = dict(바코드='default', 상품명='default', 교환처='default', 유효기간_년='default', 유효기간_월='default', 유효기간_일='default')
 
         # img_gray = cv2.imread(img_path, cv2.COLOR_BGR2GRAY)
         # img_gray = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         ################################################################################
-        
+        d = dict(code='default', name='default', place='default', year='default', month='default', day='default')
+
         base64image = request.json[0]['image']
         imageStr = base64.b64decode(base64image)
         nparr = np.fromstring(imageStr, np.uint8)
@@ -63,7 +63,7 @@ def file_upload():
 
         for code in pyzbar.decode(img_gray):
             barcodenum = code.data.decode('utf-8')
-            d["바코드"] = str(barcodenum)
+            d["code"] = str(barcodenum)
         # Resizing
         width = 1000
         aspect_ratio = float(width) / img_gray.shape[1]
@@ -98,9 +98,9 @@ def file_upload():
         year = answer[:4]
         month = answer[4:6]
         day = answer[6:8]
-        d["유효기간_년"] = year
-        d["유효기간_월"] = month
-        d["유효기간_일"] = day
+        d["year"] = year
+        d["month"] = month
+        d["day"] = day
 
         ############################################교환처################################################
 
@@ -108,7 +108,7 @@ def file_upload():
         indexCho = output.find("처")
         indexSa = output.find("사")
 
-        candidates2=d["교환처"]
+        candidates2=d["place"]
         # 교환처의 경우
         if (indexGyo != -1 and indexCho != -1):
             candidates2 = output[indexCho+1:]
@@ -140,11 +140,11 @@ def file_upload():
             indexLast = candidates2.find(found)
             candidates2 = candidates2[:indexLast]
 
-        d["교환처"] = candidates2.strip()
-        if len(d["교환처"]) >= 40:
-            d["교환처"] = "default"       
+        d["place"] = candidates2.strip()
+        if len(d["place"]) >= 40:
+            d["place"] = "default"       
         #############################################상품명###############################################
-        candidates3=d["상품명"]
+        candidates3=d["name"]
         indexSang = output.find("상")
         indexMyeong = output.find("명")
         indexShot = output.find("Shot")
@@ -193,9 +193,9 @@ def file_upload():
         indexGyo = candidates3.find("교")
         if indexGyo != -1:
             candidates3 = candidates3[:indexGyo]
-        d["상품명"] = candidates3
-        if len(d["상품명"]) >= 40:
-            d["상품명"] = "default"
+        d["name"] = candidates3
+        if len(d["name"]) >= 40:
+            d["name"] = "default"
         ############################################
         ############################################
 

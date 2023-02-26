@@ -9,6 +9,8 @@ from PIL import Image
 from flask import Flask, jsonify, render_template, request, make_response
 # from werkzeug.utils import secure_filename
 
+pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
+
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
